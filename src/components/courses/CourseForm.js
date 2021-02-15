@@ -9,7 +9,7 @@ const CourseForm = ({
   onSave,
   onChange,
   saving = false,
-  errors = {}
+  errors = {},
 }) => {
   return (
     <form onSubmit={onSave}>
@@ -32,9 +32,9 @@ const CourseForm = ({
         label="Author"
         value={course.authorId || ""}
         defaultOption="Select Author"
-        options={authors.map(author => ({
+        options={authors.map((author) => ({
           value: author.id,
-          text: author.name
+          text: author.name,
         }))}
         onChange={onChange}
         error={errors.author}
@@ -61,7 +61,7 @@ CourseForm.propTypes = {
   errors: PropTypes.object,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  saving: PropTypes.bool
+  saving: PropTypes.bool,
 };
 
 export default CourseForm;
