@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as authorActions from "../../redux/actions/authorActions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
 const AuthorsPage = () => {
   const [authors, setAuthors] = useState([]);
@@ -8,11 +11,17 @@ const AuthorsPage = () => {
   // I tried calling the API the same we did it in CoursesPages.js, but got an error too :(
   // Also, I tried doing it as a Class Component and that did work, so maybe it has something to do with the way I'm calling the API
   useEffect(() => {
-    authorActions.loadAuthors().then((response) => setAuthors(response));
+    if (authors.length === 0) {
+      authorActions.loadAuthors().catch((error) => {
+        alert("Loading authors failed" + error);
+      });
+    }
     return () => {
       console.log("cleanup");
     };
   });
+
+  console.log(authors);
 
   return (
     <div>
@@ -45,29 +54,29 @@ const AuthorsPage = () => {
 //   }
 // }
 
-// AuthorsPage.propTypes = {
-//   authors: PropTypes.array.isRequired,
-//   actions: PropTypes.object.isRequired,
-//   loading: PropTypes.bool.isRequired,
-// };
+AuthorsPage.propTypes = {
+  authors: PropTypes.array.isRequired,
+  // actions: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
-// // mapStateToProps() goes first
-// function mapStateToProps(state) {
-//   return {
-//     authors: state.authors,
-//     loading: state.apiCallsInProgress > 0,
-//   };
-// }
+// mapStateToProps() goes first
+function mapStateToProps(state) {
+  return {
+    authors: state.authors,
+    loading: state.apiCallsInProgress > 0,
+  };
+}
 
-// // mapDispatchToProps goes second
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: {
-//       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
-//     },
-//   };
-// }
+// mapDispatchToProps goes second
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+    },
+  };
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(AuthorsPage);
+export default connect(mapStateToProps /*, mapDispatchToProps*/)(AuthorsPage);
 
-export default AuthorsPage;
+//export default AuthorsPage;
