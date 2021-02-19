@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
@@ -14,6 +14,7 @@ class CoursesPage extends React.Component {
     redirectToAddCoursePage: false,
   };
 
+  // componentDidMount goes fourth
   componentDidMount() {
     const { courses, authors, actions } = this.props;
     if (courses.length === 0) {
@@ -38,6 +39,7 @@ class CoursesPage extends React.Component {
     }
   };
 
+  // render() goes third
   render() {
     return (
       <>
@@ -73,12 +75,7 @@ CoursesPage.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-// connect function connects our components to redux
-// Calling connect returns a function and that function calls our component
-// export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
-
-//or this (below)
-
+// mapStateToProps() goes first
 function mapStateToProps(state) {
   return {
     courses:
@@ -97,6 +94,7 @@ function mapStateToProps(state) {
   };
 }
 
+// mapDispatchToProps goes second
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
@@ -106,6 +104,12 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
+
+// connect function connects our components to redux
+// Calling connect returns a function and that function calls our component
+// export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+
+//or this (below)
 
 const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
 export default connectedStateAndProps(CoursesPage);
