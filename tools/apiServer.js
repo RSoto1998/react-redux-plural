@@ -54,11 +54,13 @@ server.post("/courses/", function (req, res, next) {
   }
 });
 
+// MAYBE write a function similar to the one above
+
 // Use default router
 server.use(router);
 
 // Start server
-const port = 3001;
+const port = 3002;
 server.listen(port, () => {
   console.log(`JSON Server is running on port ${port}`);
 });
@@ -79,3 +81,5 @@ function validateCourse(course) {
   if (!course.category) return "Category is required.";
   return "";
 }
+
+// write a validateAuthor function

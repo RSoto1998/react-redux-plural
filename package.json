@@ -3,7 +3,7 @@
   "description": "React and Redux Pluralsight course by Cory House",
   "scripts": {
     "start": "run-p start:dev start:api",
-    "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 3000",
+    "start:dev": "webpack-dev-server --config webpack.config.dev.js --port 4200",
     "prestart:api": "node tools/createMockDb.js",
     "start:api": "node tools/apiServer.js",
     "test": "jest --watch"
@@ -43,6 +43,7 @@
     "eslint-loader": "2.1.2",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "fetch-mock": "7.3.1",
     "html-webpack-plugin": "3.2.0",
     "http-server": "0.9.0",
@@ -72,6 +73,9 @@
     ]
   },
   "eslintConfig": {
+    "plugins": [
+      "react-hooks"
+    ],
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
@@ -96,7 +100,9 @@
       "no-debugger": "off",
       "no-console": "off",
       "no-unused-vars": "warn",
-      "react/prop-types": "warn"
+      "react/prop-types": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
       "react": {

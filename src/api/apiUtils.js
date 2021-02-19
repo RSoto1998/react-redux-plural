@@ -1,4 +1,8 @@
 export async function handleResponse(response) {
+  console.log(
+    "Currently in handleResponse(response) in apiUtils.js, response: ",
+    response
+  );
   if (response.ok) return response.json();
   if (response.status === 400) {
     // So, a server-side validation error occurred.
