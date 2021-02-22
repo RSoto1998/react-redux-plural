@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
-const AuthorsPage = () => {
+const AuthorsPage = ({ actions }) => {
   const [authors, setAuthors] = useState([]);
   const [count, setCount] = useState(0);
 
@@ -12,14 +12,14 @@ const AuthorsPage = () => {
   // Also, I tried doing it as a Class Component and that did work, so maybe it has something to do with the way I'm calling the API
   useEffect(() => {
     if (authors.length === 0) {
-      authorActions.loadAuthors().catch((error) => {
+      actions.loadAuthors().catch((error) => {
         alert("Loading authors failed" + error);
       });
     }
     return () => {
       console.log("cleanup");
     };
-  });
+  }, [authors.length, actions]);
 
   console.log(authors);
 
@@ -77,6 +77,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps /*, mapDispatchToProps*/)(AuthorsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorsPage);
 
 //export default AuthorsPage;
