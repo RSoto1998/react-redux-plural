@@ -10,25 +10,25 @@ import { toast } from "react-toastify";
 
 // props will have any properties not de-structured on the left
 function ManageCoursePage({
+  course,
   courses,
   authors,
   loadAuthors,
   saveCourse,
   loadCourses,
   history,
-  ...props
 }) {
-  const [course, setCourse] = useState({ ...props.course });
+  const [courseData, setCourseData] = useState({ ...course });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (courses.length === 0) {
+    if (courseData.length === 0) {
       loadCourses().catch((error) => {
         alert("Loading courses failed" + error);
       });
     } else {
-      setCourse({ ...props.course });
+      setCourseData({ ...course });
     }
 
     if (authors.length === 0) {
@@ -36,11 +36,11 @@ function ManageCoursePage({
         alert("Loading authors failed" + error);
       });
     }
-  }, [props.course]);
+  }, [courseData, authors, course, loadCourses, loadAuthors]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setCourse((prevCourse) => ({
+    setCourseData((prevCourse) => ({
       ...prevCourse,
       [name]: name === "authorId" ? parseInt(value, 10) : value,
     }));
